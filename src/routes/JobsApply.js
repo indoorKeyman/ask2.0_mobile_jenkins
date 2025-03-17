@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { ArrowBack } from "@mui/icons-material";
 import { useForm } from "react-hook-form";
 import axios from "axios";

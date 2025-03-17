@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { Delete, Edit, ArrowBack } from "@mui/icons-material";
@@ -39,14 +39,7 @@ const CommunityDetail = () => {
   const { register, handleSubmit, reset, setValue } = useForm();
   const editFormRef = useRef(null);
 
-  useEffect(() => {
-    if (!location.state?.questionData) {
-      fetchQuestionDetail();
-    }
-    fetchAnswers();
-  }, [id, location.state]);
-
-  const fetchQuestionDetail = async () => {
+  const fetchQuestionDetail = useCallback(async () => {
     try {
       const response = await axios.get(
         `http://localhost:8080/community/questions/detail?question_index=${id}`
@@ -55,9 +48,9 @@ const CommunityDetail = () => {
     } catch (error) {
       console.error("게시글을 불러오는데 실패했습니다:", error);
     }
-  };
+  }, [id]);
 
-  const fetchAnswers = async () => {
+  const fetchAnswers = useCallback(async () => {
     try {
       const response = await axios.get(
         `http://localhost:8080/community/answer/list?question_index=${id}`
@@ -66,7 +59,14 @@ const CommunityDetail = () => {
     } catch (error) {
       console.error("답변을 불러오는데 실패했습니다:", error);
     }
-  };
+  }, [id]);
+
+  useEffect(() => {
+    if (!location.state?.questionData) {
+      fetchQuestionDetail();
+    }
+    fetchAnswers();
+  }, [location.state, fetchQuestionDetail, fetchAnswers]);
 
   const onSubmitAnswer = async (data) => {
     const memberIndex = getMemberIndex();
@@ -198,35 +198,35 @@ const CommunityDetail = () => {
     }
   }, [editingAnswer]);
 
-  const handleUpdateAnswer = async (data) => {
-    try {
-      const token = sessionStorage.getItem("accessToken");
-      await axios.put(
-        `http://localhost:8080/community/answer/update_answer?answer_index=${editingAnswer.answer_index}`,
-        {
-          comment: data.editComment,
-        },
-        {
-          headers: {
-            access: token,
-          },
-        }
-      );
-      setEditingAnswer(null);
-      fetchAnswers();
-      alert("답변이 수정되었습니다.");
-    } catch (error) {
-      console.error("답변 수정 실패:", error);
-      if (error.response?.status === 403) {
-        alert("로그인이 만료되었습니다. 다시 로그인해주세요.");
-        sessionStorage.removeItem("accessToken");
-        delete axios.defaults.headers.common["Authorization"];
-        navigate("/login");
-      } else {
-        alert("답변 수정에 실패했습니다.");
-      }
-    }
-  };
+  // const handleUpdateAnswer = async (data) => {
+  //   try {
+  //     const token = sessionStorage.getItem("accessToken");
+  //     await axios.put(
+  //       `http://localhost:8080/community/answer/update_answer?answer_index=${editingAnswer.answer_index}`,
+  //       {
+  //         comment: data.editComment,
+  //       },
+  //       {
+  //         headers: {
+  //           access: token,
+  //         },
+  //       }
+  //     );
+  //     setEditingAnswer(null);
+  //     fetchAnswers();
+  //     alert("답변이 수정되었습니다.");
+  //   } catch (error) {
+  //     console.error("답변 수정 실패:", error);
+  //     if (error.response?.status === 403) {
+  //       alert("로그인이 만료되었습니다. 다시 로그인해주세요.");
+  //       sessionStorage.removeItem("accessToken");
+  //       delete axios.defaults.headers.common["Authorization"];
+  //       navigate("/login");
+  //     } else {
+  //       alert("답변 수정에 실패했습니다.");
+  //     }
+  //   }
+  // };
 
   if (!question) return <div>로딩중...</div>;
 
@@ -504,23 +504,23 @@ const AnswerInfo = styled.div`
   color: ${(props) => props.theme.colors.textSecondary};
 `;
 
-const ButtonGroup = styled.div`
-  display: flex;
-  gap: 8px;
-  justify-content: flex-end;
-  margin-top: 16px;
-`;
+// const ButtonGroup = styled.div`
+//   display: flex;
+//   gap: 8px;
+//   justify-content: flex-end;
+//   margin-top: 16px;
+// `;
 
-const CancelButton = styled.button`
-  padding: 8px 16px;
-  background-color: ${(props) => props.theme.colors.backgroundGray};
-  color: ${(props) => props.theme.colors.textSecondary};
-  border-radius: 8px;
-  font-weight: 600;
+// const CancelButton = styled.button`
+//   padding: 8px 16px;
+//   background-color: ${(props) => props.theme.colors.backgroundGray};
+//   color: ${(props) => props.theme.colors.textSecondary};
+//   border-radius: 8px;
+//   font-weight: 600;
 
-  &:hover {
-    background-color: ${(props) => props.theme.colors.border};
-  }
-`;
+//   &:hover {
+//     background-color: ${(props) => props.theme.colors.border};
+//   }
+// `;
 
 export default CommunityDetail;

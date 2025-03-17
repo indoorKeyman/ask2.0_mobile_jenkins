@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { Search } from "@mui/icons-material";
 import axios from "axios";
@@ -14,17 +14,7 @@ const Jobs = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const accessToken = sessionStorage.getItem("accessToken");
-    if (!accessToken) {
-      alert("로그인이 필요한 서비스입니다.");
-      navigate("/login");
-      return;
-    }
-    fetchJobs();
-  }, [applicationStatus]);
-
-  const fetchJobs = async () => {
+  const fetchJobs = useCallback(async () => {
     try {
       setLoading(true);
       const accessToken = sessionStorage.getItem("accessToken");
@@ -73,7 +63,17 @@ const Jobs = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [navigate, applicationStatus, setIsLoggedIn]);
+
+  useEffect(() => {
+    const accessToken = sessionStorage.getItem("accessToken");
+    if (!accessToken) {
+      alert("로그인이 필요한 서비스입니다.");
+      navigate("/login");
+      return;
+    }
+    fetchJobs();
+  }, [fetchJobs, navigate, applicationStatus]);
 
   const filteredJobs = jobs.filter(
     (job) =>
