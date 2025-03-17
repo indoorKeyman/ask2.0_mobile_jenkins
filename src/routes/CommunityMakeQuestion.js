@@ -47,7 +47,7 @@ const CommunityMakeQuestion = () => {
         }
       );
 
-      console.log("질문 등록에 성공하였습니다.");
+      console.log("질문 등록에 성공하였습니다.", response);
       alert("질문 등록에 성공하였습니다.");
       navigate("/community");
     } catch (error) {
