@@ -38,7 +38,7 @@ const Login = () => {
         try {
           // 사용자 정보 요청
           const memberResponse = await axios.get(
-            `http://localhost:8080/members/get_mi?username=${username}`,
+            `/api/members/get_mi?username=${username}`,
             {
               headers: {
                 access: accessToken,
