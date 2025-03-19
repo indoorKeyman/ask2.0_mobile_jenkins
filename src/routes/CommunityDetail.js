@@ -79,7 +79,7 @@ const CommunityDetail = () => {
     try {
       const token = sessionStorage.getItem("accessToken");
       await axios.post(
-        "/community/answer/make_answer",
+        "http://43.201.219.118:8080/community/answer/make_answer",
         {
           member_index: memberIndex,
           question_index: parseInt(id),
