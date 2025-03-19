@@ -33,7 +33,7 @@ const Login = () => {
 
       console.log(response);
 
-      const accessToken = response.headers.Access;
+      const accessToken = response.headers.access;
 
       if (accessToken) {
         // JWT 토큰 디코딩
