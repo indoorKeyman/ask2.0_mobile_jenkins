@@ -27,7 +27,7 @@ const Login = () => {
         },
       });
 
-      const accessToken = response.headers.access;
+      const accessToken = response.headers.Access;
 
       if (accessToken) {
         // JWT 토큰 디코딩
