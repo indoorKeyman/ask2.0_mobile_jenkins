@@ -14,7 +14,7 @@ const Menu = ({ isOpen, onClose }) => {
   const handleLogout = async () => {
     try {
       const response = await axios.post(
-        "/api/logout",
+        "http://43.201.219.118:8080/logout",
         {},
         {
           withCredentials: true,
