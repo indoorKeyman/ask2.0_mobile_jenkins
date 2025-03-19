@@ -31,6 +31,8 @@ const Login = () => {
         }
       );
 
+      console.log(response);
+
       const accessToken = response.headers.Access;
 
       if (accessToken) {
