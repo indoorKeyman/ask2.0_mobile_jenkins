@@ -18,9 +18,6 @@ const Menu = ({ isOpen, onClose }) => {
 
       const response = await axios.post("http://43.201.219.118:8080/logout", {
         withCredentials: true,
-        headers: {
-          Cookie: "refresh=" + refreshToken,
-        },
       });
 
       console.log(response);
