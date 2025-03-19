@@ -13,16 +13,15 @@ const Menu = ({ isOpen, onClose }) => {
 
   const handleLogout = async () => {
     try {
-      const response = await axios.post(
-        "http://43.201.219.118:8080/logout",
+      const refreshToken = document.cookie;
+      console.log(refreshToken);
 
-        {
-          withCredentials: true,
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await axios.post("http://43.201.219.118:8080/logout", {
+        withCredentials: true,
+        headers: {
+          Cookie: "refresh=" + refreshToken,
+        },
+      });
 
       console.log(response);
 
