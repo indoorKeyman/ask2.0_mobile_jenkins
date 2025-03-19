@@ -20,12 +20,16 @@ const Login = () => {
       formData.append("username", data.username);
       formData.append("password", data.password);
 
-      const response = await axios.post("/api/login", formData, {
-        withCredentials: true,
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.post(
+        "http://43.201.219.118:8080/login",
+        formData,
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
 
       const accessToken = response.headers.access;
 
