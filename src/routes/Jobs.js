@@ -24,7 +24,7 @@ const Jobs = () => {
         return;
       }
 
-      const response = await axios.get("../api/jobs/list", {
+      const response = await axios.get("http://43.201.219.118:8080/jobs/list", {
         headers: {
           access: accessToken,
         },

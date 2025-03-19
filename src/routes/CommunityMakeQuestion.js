@@ -38,7 +38,7 @@ const CommunityMakeQuestion = () => {
       };
 
       const response = await axios.post(
-        "http://localhost:8080/community/questions/make_question",
+        "http://43.201.219.118:8080/community/questions/make_question",
         questionData,
         {
           headers: {

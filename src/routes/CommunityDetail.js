@@ -42,7 +42,7 @@ const CommunityDetail = () => {
   const fetchQuestionDetail = useCallback(async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8080/community/questions/detail?question_index=${id}`
+        `http://43.201.219.118:8080/community/questions/detail?question_index=${id}`
       );
       setQuestion(response.data);
     } catch (error) {
@@ -53,7 +53,7 @@ const CommunityDetail = () => {
   const fetchAnswers = useCallback(async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8080/community/answer/list?question_index=${id}`
+        `http://43.201.219.118:8080/community/answer/list?question_index=${id}`
       );
       setAnswers(response.data);
     } catch (error) {
@@ -114,7 +114,7 @@ const CommunityDetail = () => {
     try {
       const token = sessionStorage.getItem("accessToken");
       await axios.delete(
-        `http://localhost:8080/community/questions/delete_question?question_index=${id}`,
+        `http://43.201.219.118:8080/community/questions/delete_question?question_index=${id}`,
         {
           headers: {
             access: token,
@@ -154,7 +154,7 @@ const CommunityDetail = () => {
     try {
       const token = sessionStorage.getItem("accessToken");
       await axios.delete(
-        `http://localhost:8080/community/answer/delete_answer?answer_index=${answerIndex}`,
+        `http://43.201.219.118:8080/community/answer/delete_answer?answer_index=${answerIndex}`,
         {
           headers: {
             access: token,
@@ -202,7 +202,7 @@ const CommunityDetail = () => {
   //   try {
   //     const token = sessionStorage.getItem("accessToken");
   //     await axios.put(
-  //       `http://localhost:8080/community/answer/update_answer?answer_index=${editingAnswer.answer_index}`,
+  //       `http://43.201.219.118:8080/community/answer/update_answer?answer_index=${editingAnswer.answer_index}`,
   //       {
   //         comment: data.editComment,
   //       },

@@ -24,7 +24,10 @@ const SignUp = () => {
         job_status: data.job_status,
       };
 
-      const response = await axios.post("/api/members/sign_up", signUpData);
+      const response = await axios.post(
+        "http://43.201.219.118:8080/members/sign_up",
+        signUpData
+      );
 
       if (response.data === "Successful signUp") {
         alert("회원가입이 완료되었습니다.");

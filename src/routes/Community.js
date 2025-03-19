@@ -27,7 +27,7 @@ const Community = () => {
     try {
       setLoading(true);
       const response = await axios.get(
-        "http://localhost:8080/community/questions/list"
+        "http://43.201.219.118:8080/community/questions/list"
       );
       setQuestions(response.data);
       setError(null);

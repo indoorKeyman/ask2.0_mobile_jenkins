@@ -32,7 +32,7 @@ const JobsApply = () => {
   const tryReissue = async () => {
     try {
       const response = await axios.post(
-        "http://localhost:8080/reissue",
+        "http://43.201.219.118:8080/reissue",
         {},
         { withCredentials: true }
       );
@@ -50,7 +50,7 @@ const JobsApply = () => {
 
   const makeJobApplication = async (applicationData, token) => {
     return await axios.post(
-      "http://localhost:8080/jobs/make_jobapplications",
+      "http://43.201.219.118:8080/jobs/make_jobapplications",
       applicationData,
       {
         headers: {
